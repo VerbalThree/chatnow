@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from '../actions/types';
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from '../actions/types.js';
 import axios from 'axios';
 
 export const registerUser = (userData) => async (dispatch) => {

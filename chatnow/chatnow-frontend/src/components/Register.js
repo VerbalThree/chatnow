@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../redux/actions/authActions.js';
+import { Link } from 'react-router-dom';
 
 function Register() {
     console.log("Register component is rendered");
@@ -31,7 +32,8 @@ function Register() {
                     <input type="password" name="password" onChange={handleChange} className="form-control"/>
                 </div>
                 <button type="submit" className="btn btn-primary">Register</button>
-            </form>
+            </form><br></br>
+            <p>Already have an account? <Link to="/login">Login into it</Link></p>
         </div>
     );
 }

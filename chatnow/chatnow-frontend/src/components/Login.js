@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../redux/actions/authActions';
+import { Link } from 'react-router-dom'
 
 function Login() {
     const dispatch = useDispatch();
@@ -26,7 +27,8 @@ function Login() {
                     <input type="password" name="password" onChange={handleChange} className="form-control"/>
                 </div>
                 <button type="submit" className="btn btn-primary">Login</button>
-            </form>
+            </form><br></br>
+            <p>Doens't have an account? <Link to="/register">Create one</Link></p>
         </div>
     );
 }
