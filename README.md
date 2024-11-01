@@ -1,1 +1,1 @@
-<h1 align="center">chatnow</h1>
+<h1 align="center">chatnow - talk with unknown people</h1>
