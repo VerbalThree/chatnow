@@ -5,24 +5,43 @@ import { useSelector } from 'react-redux';
 import Register from './components/Register.js';
 import Login from './components/Login.js';
 import Home from './components/Home.js';
+import NotFound from './components/NotFound.js';
 
 function App() {
 
   // Getting the state of authentication from Redux
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const { isAuthenticated, userRole } = useSelector(state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    userRole: state.auth.user?.role,
+  }));
+
+  // Redirecting based on the authentication state
+  const getRedirectPath = () => {
+    if (isAuthenticated === undefined){
+      return <div>Loading...</div>;
+    } else if (isAuthenticated) {
+      return <Navigate to="/home" />;
+    } else {
+      return <Navigate to="/login" />;
+    }
+  };
 
   return (
     <Router>
       <Routes>
 
-        {/* Redirect to /Home if the user is authenticated, otherwise to /Login */}
-        <Route path="/" element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />} />
+        <Route path="/" element={getRedirectPath()} />
 
         {/* The route /Home can only be acessed if the user is authenticated */}
-        <Route path="/Home" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
+        <Route path="/home" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
 
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />}/>
+        {/* Protect the routes /register and /login from authenticated users, so they can't access it */}
+        <Route path="/register" element={isAuthenticated ? <Navigate to="/home" /> : <Register />} />
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/home" /> : <Login />} />
+
+        {/* Route catch all to take care for unmatched routes */ }
+        <Route path="*" element={<NotFound />} />
+
       </Routes>
     </Router>
   );
